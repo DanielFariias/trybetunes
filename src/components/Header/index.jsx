@@ -6,7 +6,7 @@ import { getUser } from '../../services/userAPI';
 export default class Header extends React.Component {
   state = {
     user: undefined,
-  }
+  };
 
   async componentDidMount() {
     const user = await getUser();

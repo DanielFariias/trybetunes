@@ -17,7 +17,7 @@ export default class Album extends React.Component {
     album: {},
     loading: true,
     loadingFavorites: true,
-  }
+  };
 
   async componentDidMount() {
     const { match: { params: { id } } } = this.props;
@@ -40,7 +40,7 @@ export default class Album extends React.Component {
       favoriteSongs,
       loadingFavorites: false,
     });
-  }
+  };
 
   setMusics = (musicList, album) => {
     this.setState({
@@ -48,59 +48,61 @@ export default class Album extends React.Component {
       album,
       loading: false,
     });
+  };
+
+  AddFavoriteSong = async ({ target: { value, checked } }) => {
+    const { musicList } = this.state;
+
+    const song = musicList.find((music) => music.trackId === parseInt(value, 10));
+
+    const updateFunction = checked ? addSong : removeSong;
+    this.setState({
+      loadingFavorites: true,
+    });
+    updateFunction(song)
+      .then(() => getFavoriteSongs())
+      .then((favoriteSongs) => this.setFavoriteSongs(favoriteSongs));
+  };
+
+  render() {
+    const {
+      loading, musicList, album, favoriteSongs, loadingFavorites,
+    } = this.state;
+    return (
+      <div data-testid="page-album">
+        <Header />
+
+        { loading || loadingFavorites
+          ? <p>Carregando...</p>
+          : (
+            <>
+              <div className="title-content">
+                {album && (
+                <h3>
+                  <p data-testid="artist-name">
+                    {album.artistName}
+                  </p>
+                  <p data-testid="album-name">
+                    {album.collectionName}
+                  </p>
+                </h3>
+                )}
+              </div>
+              <div className="playlist">
+                {musicList.map((music) => (
+                  <MusicCard
+                    key={music.trackId}
+                    music={music}
+                    AddFavoriteSong={this.AddFavoriteSong}
+                    favorites={favoriteSongs}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+      </div>
+    );
   }
-
-   AddFavoriteSong = async ({ target: { value, checked } }) => {
-     const { musicList } = this.state;
-
-     const song = musicList.find((music) => music.trackId === parseInt(value, 10));
-
-     const updateFunction = checked ? addSong : removeSong;
-     this.setState({
-       loadingFavorites: true,
-     });
-     updateFunction(song)
-       .then(() => getFavoriteSongs())
-       .then((favoriteSongs) => this.setFavoriteSongs(favoriteSongs));
-   }
-
-   render() {
-     const { loading, musicList, album, favoriteSongs, loadingFavorites } = this.state;
-     return (
-       <div data-testid="page-album">
-         <Header />
-
-         { loading || loadingFavorites
-           ? <p>Carregando...</p>
-           : (
-             <>
-               <div className="title-content">
-                 {album && (
-                   <h3>
-                     <p data-testid="artist-name">
-                       {album.artistName}
-                     </p>
-                     <p data-testid="album-name">
-                       {album.collectionName}
-                     </p>
-                   </h3>
-                 )}
-               </div>
-               <div className="playlist">
-                 {musicList.map((music) => (
-                   <MusicCard
-                     key={ music.trackId }
-                     music={ music }
-                     AddFavoriteSong={ this.AddFavoriteSong }
-                     favorites={ favoriteSongs }
-                   />
-                 ))}
-               </div>
-             </>
-           )}
-       </div>
-     );
-   }
 }
 
 Album.propTypes = {

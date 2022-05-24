@@ -26,7 +26,7 @@ export default class Profile extends React.Component {
             : (
               <div className="profile">
                 <span>
-                  <img data-testid="profile-image" src={ user.image } alt="" />
+                  <img data-testid="profile-image" src={user.image} alt="" />
                   <Link to="profile/edit">Editar perfil</Link>
                 </span>
                 <p>

@@ -23,7 +23,7 @@ export default class ProfileEdit extends React.Component {
   handleChangeForm = ({ target: { name, value } }) => {
     const { user } = this.state;
     this.setState({ user: { ...user, [name]: value } });
-  }
+  };
 
   isButtonDisabled = () => {
     const VALIDADE_EMAIL = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
@@ -36,7 +36,7 @@ export default class ProfileEdit extends React.Component {
       && user.image !== '');
 
     return hasEmail && notEmpty;
-  }
+  };
 
   isSubmitted = (e) => {
     e.preventDefault();
@@ -44,13 +44,17 @@ export default class ProfileEdit extends React.Component {
     const { user } = this.state;
     const { history } = this.props;
 
-    this.setState({ loading: true },
+    this.setState(
+      { loading: true },
       async () => {
         await updateUser(user);
-        this.setState({ loading: false },
-          () => history.push('/profile'));
-      });
-  }
+        this.setState(
+          { loading: false },
+          () => history.push('/profile'),
+        );
+      },
+    );
+  };
 
   render() {
     const { loading, user } = this.state;
@@ -71,8 +75,8 @@ export default class ProfileEdit extends React.Component {
                     type="text"
                     name="name"
                     data-testid="edit-input-name"
-                    value={ user.name }
-                    onChange={ this.handleChangeForm }
+                    value={user.name}
+                    onChange={this.handleChangeForm}
                   />
                 </label>
 
@@ -83,8 +87,8 @@ export default class ProfileEdit extends React.Component {
                     type="text"
                     name="email"
                     data-testid="edit-input-email"
-                    value={ user.email }
-                    onChange={ this.handleChangeForm }
+                    value={user.email}
+                    onChange={this.handleChangeForm}
                   />
                 </label>
 
@@ -95,8 +99,8 @@ export default class ProfileEdit extends React.Component {
                     type="text"
                     name="description"
                     data-testid="edit-input-description"
-                    value={ user.description }
-                    onChange={ this.handleChangeForm }
+                    value={user.description}
+                    onChange={this.handleChangeForm}
                   />
                 </label>
 
@@ -107,16 +111,16 @@ export default class ProfileEdit extends React.Component {
                     type="text"
                     name="image"
                     data-testid="edit-input-image"
-                    value={ user.image }
-                    onChange={ this.handleChangeForm }
+                    value={user.image}
+                    onChange={this.handleChangeForm}
                   />
                 </label>
 
                 <button
                   type="submit"
                   data-testid="edit-button-save"
-                  disabled={ !this.isButtonDisabled() }
-                  onClick={ this.isSubmitted }
+                  disabled={!this.isButtonDisabled()}
+                  onClick={this.isSubmitted}
                 >
                   Salvar
                 </button>

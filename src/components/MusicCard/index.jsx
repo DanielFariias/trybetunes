@@ -11,7 +11,7 @@ export default class MusicCard extends React.Component {
         </p>
         <audio
           data-testid="audio-component"
-          src={ music.previewUrl }
+          src={music.previewUrl}
           controls
         >
           <track kind="captions" />
@@ -21,18 +21,18 @@ export default class MusicCard extends React.Component {
           .
         </audio>
         <label
-          htmlFor={ `favorite-${music.trackId}` }
-          data-testid={ `checkbox-music-${music.trackId}` }
+          htmlFor={`favorite-${music.trackId}`}
+          data-testid={`checkbox-music-${music.trackId}`}
         >
           Favorita
           {' '}
           <input
             name="favorite"
-            id={ `favorite-${music.trackId}` }
-            value={ music.trackId }
+            id={`favorite-${music.trackId}`}
+            value={music.trackId}
             type="checkbox"
-            checked={ favorites.some((s) => s.trackId === music.trackId) }
-            onChange={ AddFavoriteSong }
+            checked={favorites.some((s) => s.trackId === music.trackId)}
+            onChange={AddFavoriteSong}
           />
         </label>
       </div>

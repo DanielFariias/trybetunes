@@ -12,7 +12,7 @@ export default class Favorites extends React.Component {
   state = {
     loading: true,
     favoriteSongs: [],
-  }
+  };
 
   componentDidMount() {
     getFavoriteSongs().then((favoriteSongs) => {
@@ -23,7 +23,7 @@ export default class Favorites extends React.Component {
     });
   }
 
-  onFavoriteChange =({ target }) => {
+  onFavoriteChange = ({ target }) => {
     const { favoriteSongs } = this.state;
     const { checked, value } = target;
     const song = favoriteSongs.find((m) => m.trackId === parseInt(value, 10));
@@ -37,7 +37,7 @@ export default class Favorites extends React.Component {
     updateFunction(song)
       .then(() => getFavoriteSongs())
       .then((favSongs) => this.setState({ favoriteSongs: favSongs, loading: false }));
-  }
+  };
 
   render() {
     const { favoriteSongs, loading } = this.state;
@@ -50,10 +50,10 @@ export default class Favorites extends React.Component {
           : (
             favoriteSongs.map((song) => (
               <MusicCard
-                key={ song.trackId }
-                music={ song }
-                AddFavoriteSong={ this.onFavoriteChange }
-                favorites={ favoriteSongs }
+                key={song.trackId}
+                music={song}
+                AddFavoriteSong={this.onFavoriteChange}
+                favorites={favoriteSongs}
               />
             ))
           )}
