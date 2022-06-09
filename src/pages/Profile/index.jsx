@@ -1,8 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import { getUser } from '../../services/userAPI';
 import Header from '../../components/Header';
+
+import * as C from './styles';
+
+import userImageDefault from '../../assets/images/userImageDefault.svg';
+import { OutlinedButton } from '../../components/shared/OutlinedButton';
 
 export default class Profile extends React.Component {
   state = {
@@ -15,39 +20,52 @@ export default class Profile extends React.Component {
     this.setState({ loading: false, user });
   }
 
+  redirectToEdit = () => {
+    const { history } = this.props;
+    history.push('profile/edit');
+  };
+
   render() {
     const { loading, user } = this.state;
     return (
-      <div data-testid="page-profile">
+      <C.Container>
         <Header />
-        {
-          loading
-            ? <p>Carregando...</p>
-            : (
-              <div className="profile">
-                <span>
-                  <img data-testid="profile-image" src={user.image} alt="" />
-                  <Link to="profile/edit">Editar perfil</Link>
-                </span>
+        {loading
+          ? <p>Carregando...</p>
+          : (
+            <C.Profile>
+              <C.UserImage>
+                <img src={user.image || userImageDefault} alt="your profile" />
+                <OutlinedButton
+                  type="button"
+                  onClick={this.redirectToEdit}
+                >
+                  Editar Perfil
+                </OutlinedButton>
+              </C.UserImage>
+              <C.UserDescription>
                 <p>
                   Nome:
-                  {' '}
                   <span>{user.name}</span>
                 </p>
                 <p>
-                  Descrição:
-                  {' '}
-                  <span>{user.description}</span>
-                </p>
-                <p>
                   Email:
-                  {' '}
                   <span>{user.email}</span>
                 </p>
-              </div>
-            )
-        }
-      </div>
+                <p>
+                  Descrição:
+                  <span>{user.description}</span>
+                </p>
+              </C.UserDescription>
+            </C.Profile>
+          )}
+      </C.Container>
     );
   }
 }
+
+Profile.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};

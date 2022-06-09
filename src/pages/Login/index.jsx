@@ -3,6 +3,12 @@ import PropTypes from 'prop-types';
 
 import { createUser } from '../../services/userAPI';
 
+import Logo from '../../assets/images/logo.svg';
+// import { Container, Content } from './styles';
+
+import * as C from './styles';
+import { Button } from '../../components/shared/Button';
+
 export default class Login extends React.Component {
   state = {
     formName: '',
@@ -40,30 +46,36 @@ export default class Login extends React.Component {
     return loading ? (
       <p>Carregando...</p>
     ) : (
-      <div data-testid="page-login">
-        <h1>Login</h1>
-        <form>
-          <label htmlFor="login-submit-input">
-            Nome:
-            <input
-              name="formName"
-              id="login-submit-button"
-              type="text"
-              data-testid="login-name-input"
-              value={formName}
-              onChange={this.handleChangeForm}
-            />
-          </label>
-          <button
-            type="submit"
-            data-testid="login-submit-button"
-            onClick={this.onButtonClick}
-            disabled={!this.buttonDisabled()}
-          >
-            Entrar
-          </button>
-        </form>
-      </div>
+      <C.Container data-testid="page-login">
+        <C.Content>
+          <h1>TrybeTunes</h1>
+          <form>
+            <label htmlFor="login-submit-input">
+              Digite seu nome:
+              <input
+                name="formName"
+                id="login-submit-button"
+                type="text"
+                data-testid="login-name-input"
+                value={formName}
+                placeholder="Nome"
+                onChange={this.handleChangeForm}
+              />
+            </label>
+            <Button
+              type="submit"
+              data-testid="login-submit-button"
+              onClick={this.onButtonClick}
+              disabled={!this.buttonDisabled()}
+            >
+              Entrar
+            </Button>
+          </form>
+        </C.Content>
+        <C.Aside>
+          <img src={Logo} alt="Trybetunes Logo" />
+        </C.Aside>
+      </C.Container>
     );
   }
 }

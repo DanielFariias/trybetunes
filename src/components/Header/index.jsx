@@ -1,9 +1,14 @@
+import Proptypes from 'prop-types';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import { getUser } from '../../services/userAPI';
 
-export default class Header extends React.Component {
+import userIcon from '../../assets/images/userIcon.svg';
+
+import * as C from './styles';
+
+class Header extends React.Component {
   state = {
     user: undefined,
   };
@@ -16,16 +21,50 @@ export default class Header extends React.Component {
 
   render() {
     const { user } = this.state;
+    const { history: { location: { pathname } } } = this.props;
     return (
-      <header data-testid="header-component">
+      <C.Container data-testid="header-component">
+        <nav>
+          <Link
+            to="/search"
+            className={pathname === '/search' ? 'selected' : null}
+          >
+            Pesquisar
+          </Link>
+          <Link
+            to="/favorites"
+            className={pathname === '/favorites' ? 'selected' : null}
+          >
+            Favoritas
+          </Link>
+          <Link
+            to="/profile"
+            className={pathname === '/profile' ? 'selected' : null}
+          >
+            Meu Perfil
+          </Link>
+        </nav>
+
         {user
-          ? <p data-testid="header-user-name">{user.name}</p>
+          ? (
+            <C.User>
+              <img src={user.image ? user.image : userIcon} alt="" />
+              <p data-testid="header-user-name">{user.name}</p>
+            </C.User>
+          )
           : <p>Carregando...</p>}
 
-        <Link to="/search" data-testid="link-to-search">Pesquisar</Link>
-        <Link to="/favorites" data-testid="link-to-favorites">Favoritas</Link>
-        <Link to="/profile" data-testid="link-to-profile">Meu Perfil</Link>
-      </header>
+      </C.Container>
     );
   }
 }
+
+export default withRouter(Header);
+
+Header.propTypes = {
+  history: Proptypes.shape({
+    location: Proptypes.shape({
+      pathname: Proptypes.string,
+    }),
+  }).isRequired,
+};

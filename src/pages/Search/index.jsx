@@ -4,6 +4,12 @@ import { Link } from 'react-router-dom';
 import searchAlbumsAPI from '../../services/searchAlbumsAPI';
 import Header from '../../components/Header';
 
+import searchIcon from '../../assets/images/searchIcon.svg';
+
+import * as C from './styles';
+import { Button } from '../../components/shared/Button';
+import CardMusic from '../../components/CardMusic';
+
 export default class Search extends React.Component {
   state = {
     loading: false,
@@ -57,61 +63,72 @@ export default class Search extends React.Component {
       artistName,
       hasAlbum,
     } = this.state;
-
     return (
-      <div data-testid="page-search">
+      <C.Container>
         <Header />
-        <form>
-          <label htmlFor="search-artist-input">
-            <input
-              id="search-artist-input"
-              type="text"
-              name="artistFormName"
-              value={artistFormName}
-              data-testid="search-artist-input"
-              onChange={this.handleChangeForm}
-            />
-          </label>
-          <button
-            type="submit"
-            data-testid="search-artist-button"
-            disabled={!this.buttonDisabled()}
-            onClick={this.onButtonClick}
-          >
-            Pesquisar
-          </button>
-        </form>
+        <C.Content>
+          <C.Form>
+            <label htmlFor="search-artist-input">
+              <input
+                id="search-artist-input"
+                type="text"
+                name="artistFormName"
+                value={artistFormName}
+                placeholder="Nome do Artista"
+                onChange={this.handleChangeForm}
+              />
+              <button
+                type="button"
+                disabled={!this.buttonDisabled()}
+                onClick={this.onButtonClick}
+              >
+                <img src={searchIcon} alt="Search Icon" />
+              </button>
+            </label>
+            <div>
+              <Button
+                type="submit"
+                data-testid="search-artist-button"
+                disabled={!this.buttonDisabled()}
+                onClick={this.onButtonClick}
+              >
+                Pesquisar
+              </Button>
+            </div>
+          </C.Form>
 
-        { loading
-          ? <p>Carregando...</p>
-          : (
-            <div className="album-list">
-              {artistAlbum.length > 0 && (
+          { loading
+            ? <p>Carregando...</p>
+            : (
+              <div>
+                {artistAlbum.length > 0 && (
                 <>
                   <h2>
                     Resultado de álbuns de:
                     {' '}
                     {artistName}
                   </h2>
-                  <div className="">
-                    { artistAlbum.map(({ collectionId, collectionName }) => (
+                  <C.CardList>
+                    { artistAlbum.map((music) => (
                       <Link
-                        to={`/album/${collectionId}`}
-                        key={collectionId}
-                        data-testid={`link-to-album-${collectionId}`}
+                        to={`/album/${music.collectionId}`}
+                        key={music.collectionId}
+                        data-testid={`link-to-album-${music.collectionId}`}
                       >
-                        {collectionName}
+                        <CardMusic music={music} />
                       </Link>
                     ))}
-                  </div>
+                  </C.CardList>
                 </>
-              )}
-              <div>
-                { hasAlbum ? null : <p>Nenhum álbum foi encontrado</p> }
+                )}
+                <div>
+                  { hasAlbum ? null : <p>Nenhum álbum foi encontrado</p> }
+                </div>
               </div>
-            </div>
-          )}
-      </div>
+            )}
+        </C.Content>
+
+      </C.Container>
     );
   }
 }

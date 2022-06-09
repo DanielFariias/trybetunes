@@ -10,6 +10,8 @@ import {
   removeSong,
 } from '../../services/favoriteSongsAPI';
 
+import * as C from './styles';
+
 export default class Album extends React.Component {
   state = {
     musicList: [],
@@ -23,7 +25,6 @@ export default class Album extends React.Component {
     const { match: { params: { id } } } = this.props;
 
     const request = await getMusics(id);
-    // const favorites = await getFavoriteSongs();
     const album = request[0];
     const musicList = request.filter((item) => item.kind === 'song');
 
@@ -68,39 +69,35 @@ export default class Album extends React.Component {
     const {
       loading, musicList, album, favoriteSongs, loadingFavorites,
     } = this.state;
+
     return (
-      <div data-testid="page-album">
+      <C.Container>
         <Header />
 
         { loading || loadingFavorites
           ? <p>Carregando...</p>
           : (
-            <>
-              <div className="title-content">
-                {album && (
-                <h3>
-                  <p data-testid="artist-name">
-                    {album.artistName}
-                  </p>
-                  <p data-testid="album-name">
-                    {album.collectionName}
-                  </p>
-                </h3>
-                )}
-              </div>
-              <div className="playlist">
+            <C.Content>
+              <C.ArtistContent>
+                <img src={album.artworkUrl100} alt="" />
+                <h1>{album.collectionName}</h1>
+                <h2>{album.artistName}</h2>
+              </C.ArtistContent>
+
+              <C.MusicListContent>
                 {musicList.map((music) => (
                   <MusicCard
                     key={music.trackId}
                     music={music}
                     AddFavoriteSong={this.AddFavoriteSong}
                     favorites={favoriteSongs}
+                    isFavoritePage={false}
                   />
                 ))}
-              </div>
-            </>
+              </C.MusicListContent>
+            </C.Content>
           )}
-      </div>
+      </C.Container>
     );
   }
 }

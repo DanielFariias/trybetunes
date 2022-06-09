@@ -17,7 +17,6 @@ class App extends React.Component {
   render() {
     return (
       <ThemeProvider theme={defaultTheme}>
-        <GlobalStyles />
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={Login} />
@@ -29,6 +28,7 @@ class App extends React.Component {
             <Route path="*" component={NotFound} />
           </Switch>
         </BrowserRouter>
+        <GlobalStyles />
       </ThemeProvider>
     );
   }

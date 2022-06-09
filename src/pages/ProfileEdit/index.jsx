@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 import { getUser, updateUser } from '../../services/userAPI';
 import Header from '../../components/Header';
 
+import * as C from './styles';
+import userImageDefault from '../../assets/images/userImageDefault.svg';
+import { OutlinedButton } from '../../components/shared/OutlinedButton';
+
 export default class ProfileEdit extends React.Component {
   state = {
     loading: true,
@@ -60,74 +64,91 @@ export default class ProfileEdit extends React.Component {
     const { loading, user } = this.state;
 
     return (
-      <div data-testid="page-profile-edit">
+      <C.Container>
         <Header />
-
         {
           loading
             ? <p>Carregando...</p>
             : (
-              <form>
-                <label htmlFor="edit-input-name">
-                  Nome:
-                  <input
-                    id="edit-input-name"
-                    type="text"
-                    name="name"
-                    data-testid="edit-input-name"
-                    value={user.name}
-                    onChange={this.handleChangeForm}
-                  />
-                </label>
+              <C.Content>
+                <C.FormUpdate>
+                  <C.ImageLabel>
+                    <img src={user.image || userImageDefault} alt="" />
+                    <label htmlFor="edit-input-image">
+                      Insira um link:
+                      <input
+                        id="edit-input-image"
+                        type="text"
+                        name="image"
+                        placeholder="Url de sua imagem"
+                        data-testid="edit-input-image"
+                        value={user.image}
+                        onChange={this.handleChangeForm}
+                      />
+                    </label>
+                  </C.ImageLabel>
 
-                <label htmlFor="edit-input-email">
-                  Email:
-                  <input
-                    id="edit-input-email"
-                    type="text"
-                    name="email"
-                    data-testid="edit-input-email"
-                    value={user.email}
-                    onChange={this.handleChangeForm}
-                  />
-                </label>
+                  <C.InputLabel htmlFor="edit-input-name">
+                    Nome:
+                    <small>
+                      Fique à vontade para usar seu nome social
+                    </small>
+                    <input
+                      id="edit-input-name"
+                      type="text"
+                      name="name"
+                      data-testid="edit-input-name"
+                      placeholder="Digite seu nome aqui"
+                      value={user.name}
+                      onChange={this.handleChangeForm}
+                    />
+                  </C.InputLabel>
 
-                <label htmlFor="edit-input-description">
-                  Descrição:
-                  <input
-                    id="edit-input-description"
-                    type="text"
-                    name="description"
-                    data-testid="edit-input-description"
-                    value={user.description}
-                    onChange={this.handleChangeForm}
-                  />
-                </label>
+                  <C.InputLabel htmlFor="edit-input-email">
+                    Email:
+                    <small>
+                      Escolha seu melhor e-mail para utlizar aqui
+                    </small>
+                    <input
+                      id="edit-input-email"
+                      type="text"
+                      name="email"
+                      placeholder="usuario@usuario.com"
+                      data-testid="edit-input-email"
+                      value={user.email}
+                      onChange={this.handleChangeForm}
+                    />
+                  </C.InputLabel>
 
-                <label htmlFor="edit-input-image">
-                  Imagem:
-                  <input
-                    id="edit-input-image"
-                    type="text"
-                    name="image"
-                    data-testid="edit-input-image"
-                    value={user.image}
-                    onChange={this.handleChangeForm}
-                  />
-                </label>
+                  <C.InputLabel htmlFor="edit-input-description">
+                    Descrição:
+                    <small>
+                      Conte um pouco sobre quem é você
+                    </small>
+                    <input
+                      id="edit-input-description"
+                      type="text"
+                      name="description"
+                      data-testid="edit-input-description"
+                      placeholder="Sobre você"
+                      value={user.description}
+                      onChange={this.handleChangeForm}
+                    />
+                  </C.InputLabel>
 
-                <button
-                  type="submit"
-                  data-testid="edit-button-save"
-                  disabled={!this.isButtonDisabled()}
-                  onClick={this.isSubmitted}
-                >
-                  Salvar
-                </button>
-              </form>
+                  <OutlinedButton
+                    type="submit"
+                    data-testid="edit-button-save"
+                    disabled={!this.isButtonDisabled()}
+                    onClick={this.isSubmitted}
+                  >
+                    Salvar
+                  </OutlinedButton>
+                </C.FormUpdate>
+              </C.Content>
             )
         }
-      </div>
+      </C.Container>
     );
   }
 }

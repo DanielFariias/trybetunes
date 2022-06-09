@@ -8,6 +8,8 @@ import {
   removeSong,
 } from '../../services/favoriteSongsAPI';
 
+import * as C from './styles';
+
 export default class Favorites extends React.Component {
   state = {
     loading: true,
@@ -42,22 +44,28 @@ export default class Favorites extends React.Component {
   render() {
     const { favoriteSongs, loading } = this.state;
     return (
-      <div data-testid="page-favorites">
+      <C.Container>
         <Header />
 
         {loading
           ? <p> Carregando...</p>
           : (
-            favoriteSongs.map((song) => (
-              <MusicCard
-                key={song.trackId}
-                music={song}
-                AddFavoriteSong={this.onFavoriteChange}
-                favorites={favoriteSongs}
-              />
-            ))
+            <C.Content>
+              <h1>Músicas Favoritas</h1>
+              {favoriteSongs.map((song) => (
+                <div key={song.trackId}>
+
+                  <MusicCard
+                    music={song}
+                    AddFavoriteSong={this.onFavoriteChange}
+                    favorites={favoriteSongs}
+                    isFavoritePage
+                  />
+                </div>
+              ))}
+            </C.Content>
           )}
-      </div>
+      </C.Container>
     );
   }
 }
