@@ -11,6 +11,7 @@ import {
 } from '../../services/favoriteSongsAPI';
 
 import * as C from './styles';
+import Loader from '../../components/Loader';
 
 export default class Album extends React.Component {
   state = {
@@ -75,7 +76,7 @@ export default class Album extends React.Component {
         <Header />
 
         { loading || loadingFavorites
-          ? <p>Carregando...</p>
+          ? <Loader />
           : (
             <C.Content>
               <C.ArtistContent>

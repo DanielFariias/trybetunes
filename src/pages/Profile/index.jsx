@@ -8,6 +8,7 @@ import * as C from './styles';
 
 import userImageDefault from '../../assets/images/userImageDefault.svg';
 import { OutlinedButton } from '../../components/shared/OutlinedButton';
+import Loader from '../../components/Loader';
 
 export default class Profile extends React.Component {
   state = {
@@ -31,7 +32,7 @@ export default class Profile extends React.Component {
       <C.Container>
         <Header />
         {loading
-          ? <p>Carregando...</p>
+          ? <Loader />
           : (
             <C.Profile>
               <C.UserImage>

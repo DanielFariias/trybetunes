@@ -8,6 +8,7 @@ import Logo from '../../assets/images/logo.svg';
 
 import * as C from './styles';
 import { Button } from '../../components/shared/Button';
+import Loader from '../../components/Loader';
 
 export default class Login extends React.Component {
   state = {
@@ -44,7 +45,7 @@ export default class Login extends React.Component {
     const { formName, loading } = this.state;
 
     return loading ? (
-      <p>Carregando...</p>
+      <Loader />
     ) : (
       <C.Container data-testid="page-login">
         <C.Content>

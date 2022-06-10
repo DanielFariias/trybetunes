@@ -9,6 +9,7 @@ import {
 } from '../../services/favoriteSongsAPI';
 
 import * as C from './styles';
+import Loader from '../../components/Loader';
 
 export default class Favorites extends React.Component {
   state = {
@@ -48,7 +49,7 @@ export default class Favorites extends React.Component {
         <Header />
 
         {loading
-          ? <p> Carregando...</p>
+          ? <Loader />
           : (
             <C.Content>
               <h1>Músicas Favoritas</h1>

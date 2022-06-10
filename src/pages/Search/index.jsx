@@ -9,6 +9,7 @@ import searchIcon from '../../assets/images/searchIcon.svg';
 import * as C from './styles';
 import { Button } from '../../components/shared/Button';
 import CardMusic from '../../components/CardMusic';
+import Loader from '../../components/Loader';
 
 export default class Search extends React.Component {
   state = {
@@ -98,7 +99,7 @@ export default class Search extends React.Component {
           </C.Form>
 
           { loading
-            ? <p>Carregando...</p>
+            ? <Loader />
             : (
               <div>
                 {artistAlbum.length > 0 && (

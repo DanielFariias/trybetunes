@@ -7,6 +7,7 @@ import Header from '../../components/Header';
 import * as C from './styles';
 import userImageDefault from '../../assets/images/userImageDefault.svg';
 import { OutlinedButton } from '../../components/shared/OutlinedButton';
+import Loader from '../../components/Loader';
 
 export default class ProfileEdit extends React.Component {
   state = {
@@ -68,7 +69,7 @@ export default class ProfileEdit extends React.Component {
         <Header />
         {
           loading
-            ? <p>Carregando...</p>
+            ? <Loader />
             : (
               <C.Content>
                 <C.FormUpdate>
